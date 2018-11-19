@@ -5,8 +5,9 @@
  */
 package com.kryptag.getcreditscore;
 
+import com.kryptag.rabbitmqconnector.MessageClasses.CreditMessage;
 import com.google.gson.Gson;
-import com.kryptag.rabbitmqconnector.BasicMessage;
+import com.kryptag.rabbitmqconnector.MessageClasses.BasicMessage;
 import com.kryptag.rabbitmqconnector.RMQConnection;
 import com.kryptag.rabbitmqconnector.RMQConsumer;
 import java.util.concurrent.ConcurrentLinkedQueue;
