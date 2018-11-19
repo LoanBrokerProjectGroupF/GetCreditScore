@@ -7,7 +7,10 @@ package com.kryptag.getcreditscore;
 
 import com.kryptag.rabbitmqconnector.RMQConnection;
 import com.kryptag.rabbitmqconnector.RMQProducer;
+import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,6 +24,13 @@ public class Producer extends RMQProducer{
 
     @Override
     public void run() {
-        super.run(); 
+       try {
+            super.getRmq().createConnection();
+            getRmq().putMessageInQueue(getQueue());
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(RMQProducer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
+    
 }

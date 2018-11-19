@@ -15,8 +15,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class CreditGetter {
    
     public static void main(String[] args) {
-        RMQConnection rmqPub = new RMQConnection("student", "cph", "datdb.cphbusiness.dk", 5672, ExchangeNames.ENTRY_POINT.name());
-        RMQConnection rmqCon = new RMQConnection("student", "cph", "datdb.cphbusiness.dk", 5672, ExchangeNames.CREDITSCORE_TOGETBANKS.name());
+        RMQConnection rmqPub = new RMQConnection("guest", "guest", "datdb.cphbusiness.dk", 5672, ExchangeNames.ENTRY_POINT.name());
+        RMQConnection rmqCon = new RMQConnection("guest", "guest", "datdb.cphbusiness.dk", 5672, ExchangeNames.CREDITSCORE_TOGETBANKS.name());
         ConcurrentLinkedQueue q = new ConcurrentLinkedQueue();
         Producer producer = new Producer(q, rmqPub);
         Consumer consumer = new Consumer(q, rmqCon);

@@ -27,10 +27,13 @@ public class Consumer extends RMQConsumer {
     }
 
     private void doWork() {
-        Gson g = super.getGson();
-        BasicMessage bmsg = g.fromJson(super.getQueue().remove().toString(), BasicMessage.class);
-        CreditMessage cmsg = createCreditMessage(bmsg);
-        super.getRmq().sendMessage(g.toJson(cmsg));
+        Gson g = new Gson();
+        super.getRmq().createConnection();
+        if (!super.getQueue().isEmpty()) {
+            BasicMessage bmsg = g.fromJson(super.getQueue().remove().toString(), BasicMessage.class);
+            CreditMessage cmsg = createCreditMessage(bmsg);
+            super.getRmq().sendMessage(g.toJson(cmsg));
+        }
     }
 
     private int getCreditScore(String ssn) {
