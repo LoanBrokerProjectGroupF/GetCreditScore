@@ -5,7 +5,7 @@
  */
 package com.kryptag.getcreditscore;
 
-import com.kryptag.rabbitmqconnector.ExchangeNames;
+import com.kryptag.rabbitmqconnector.Enums.ExchangeNames;
 import com.kryptag.rabbitmqconnector.RMQConnection;
 import java.util.concurrent.ConcurrentLinkedQueue;
 /**
@@ -15,8 +15,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class CreditGetter {
    
     public static void main(String[] args) {
-        RMQConnection rmqPub = new RMQConnection("guest", "guest", "datdb.cphbusiness.dk", 5672, ExchangeNames.ENTRY_POINT.name());
-        RMQConnection rmqCon = new RMQConnection("guest", "guest", "datdb.cphbusiness.dk", 5672, ExchangeNames.CREDITSCORE_TOGETBANKS.name());
+        RMQConnection rmqPub = new RMQConnection("guest", "guest", "datdb.cphbusiness.dk", 5672, ExchangeNames.ENTRY_POINT.toString());
+        RMQConnection rmqCon = new RMQConnection("guest", "guest", "datdb.cphbusiness.dk", 5672, ExchangeNames.CREDITSCORE_TOGETBANKS.toString());
         ConcurrentLinkedQueue q = new ConcurrentLinkedQueue();
         Producer producer = new Producer(q, rmqPub);
         Consumer consumer = new Consumer(q, rmqCon);

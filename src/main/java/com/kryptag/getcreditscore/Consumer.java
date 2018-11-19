@@ -29,11 +29,13 @@ public class Consumer extends RMQConsumer {
 
     private void doWork() {
         Gson g = new Gson();
-        super.getRmq().createConnection();
-        if (!super.getQueue().isEmpty()) {
-            BasicMessage bmsg = g.fromJson(super.getQueue().remove().toString(), BasicMessage.class);
-            CreditMessage cmsg = createCreditMessage(bmsg);
-            super.getRmq().sendMessage(g.toJson(cmsg));
+        this.getRmq().createConnection();
+        while (Thread.currentThread().isAlive()) {
+            if (!this.getQueue().isEmpty()) {
+                BasicMessage bmsg = g.fromJson(this.getQueue().remove().toString(), BasicMessage.class);
+                CreditMessage cmsg = createCreditMessage(bmsg);
+                this.getRmq().sendMessage(g.toJson(cmsg));
+            }
         }
     }
 

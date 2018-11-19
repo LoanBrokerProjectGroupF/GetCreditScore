@@ -25,8 +25,7 @@ public class Producer extends RMQProducer{
     @Override
     public void run() {
        try {
-            super.getRmq().createConnection();
-            getRmq().putMessageInQueue(getQueue());
+            this.getRmq().putMessageInQueue(this.getQueue());
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(RMQProducer.class.getName()).log(Level.SEVERE, null, ex);
         }
