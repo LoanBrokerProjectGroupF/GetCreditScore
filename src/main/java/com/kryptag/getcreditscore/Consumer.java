@@ -24,7 +24,9 @@ public class Consumer extends RMQConsumer {
 
     @Override
     public void run() {
-        doWork();
+        while(!Thread.currentThread().isInterrupted()){
+            doWork();
+        }
     }
 
     private void doWork() {
@@ -35,6 +37,7 @@ public class Consumer extends RMQConsumer {
                 BasicMessage bmsg = g.fromJson(this.getQueue().remove().toString(), BasicMessage.class);
                 CreditMessage cmsg = createCreditMessage(bmsg);
                 this.getRmq().sendMessage(g.toJson(cmsg));
+                System.out.println(cmsg.toString());
             }
         }
     }
