@@ -34,6 +34,8 @@ public class Consumer extends RMQConsumer {
         this.getRmq().createConnection();
         while (Thread.currentThread().isAlive()) {
             if (!this.getQueue().isEmpty()) {
+                // should be in try catch!
+                // internal queue 
                 BasicMessage bmsg = g.fromJson(this.getQueue().remove().toString(), BasicMessage.class);
                 CreditMessage cmsg = createCreditMessage(bmsg);
                 this.getRmq().sendMessage(g.toJson(cmsg));

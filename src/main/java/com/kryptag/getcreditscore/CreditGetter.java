@@ -15,12 +15,19 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class CreditGetter {
    
     public static void main(String[] args) {
+        // Takes request from RMQ and puts in into the internal queue
         RMQConnection rmqPub = new RMQConnection("guest", "guest", "datdb.cphbusiness.dk", 5672, ExchangeNames.ENTRY_POINT.toString());
+        // Takes the request from internal queue and procceses it before sending it back to RMQ
         RMQConnection rmqCon = new RMQConnection("guest", "guest", "datdb.cphbusiness.dk", 5672, ExchangeNames.CREDITSCORE_TOGETBANKS.toString());
+        // Internal queue
         ConcurrentLinkedQueue q = new ConcurrentLinkedQueue();
+        // producer implementation 
         Producer producer = new Producer(q, rmqPub);
+        // procceses implementation 
         Consumer consumer = new Consumer(q, rmqCon);
+        // start thread
         producer.start();
+        // start thread 
         consumer.start();
         
     }
